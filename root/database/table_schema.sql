@@ -6,6 +6,12 @@ CREATE TABLE "users" (
   "email" varchar
 );
 
+CREATE TABLE "privileges" (
+  "role" varchar PRIMARY KEY,
+  "permissions" varchar,
+  "resource" varchar
+);
+
 CREATE TABLE "user_states" (
   "user_id" integer PRIMARY KEY,
   "current_story_id" integer,
@@ -66,6 +72,8 @@ CREATE TABLE "character_to_trait" (
   "character_id" integer,
   "trait_id" integer
 );
+
+ALTER TABLE "users" ADD FOREIGN KEY ("role") REFERENCES "privileges" ("role");
 
 ALTER TABLE "user_states" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("user_id");
 

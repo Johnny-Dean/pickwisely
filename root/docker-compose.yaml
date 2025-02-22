@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  postgres_db:
+    container_name: "postgres_db"
+    build:
+      context: ./database
+      dockerfile: Dockerfile 
+    environment:
+      - POSTGRES_PASSWORD=123 # TODO: Change this to grab for a config (.gitignore)
+    ports:
+      - "5432:5432"

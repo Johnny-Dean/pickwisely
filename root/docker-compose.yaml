@@ -1,11 +1,15 @@
-version: "3.9"
 services:
   postgres_db:
     container_name: "postgres_db"
-    build:
-      context: ./database
-      dockerfile: Dockerfile 
+    image: postgres:latest
     environment:
-      - POSTGRES_PASSWORD=123 # TODO: Change this to grab for a config (.gitignore)
+      - POSTGRES_DB=pickwisely_dev
+      # TODO: Use env variable for this
+      - POSTGRES_PASSWORD=123
+    volumes:
+      - ./database/01_table_schemas.sql:/docker-entrypoint-initdb.d/01_table_schemas.sql
+      - ./database/02_seed_data.sql:/docker-entrypoint-initdb.d/02_seed_data.sql
     ports:
       - "5432:5432"
+    # Frontend Service
+    # Backend Service

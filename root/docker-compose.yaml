@@ -11,5 +11,12 @@ services:
       - ./database/02_seed_data.sql:/docker-entrypoint-initdb.d/02_seed_data.sql
     ports:
       - "5432:5432"
-    # Frontend Service
-    # Backend Service
+  fastapi_backend:
+    container_name: "fast_api" 
+    build: ./backend
+    depends_on:
+    - postgres_db
+    volumes:
+    - ./backend:/app
+    ports:
+    - "8000:8000"

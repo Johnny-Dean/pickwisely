@@ -45,6 +45,7 @@ class Stories(Base):
     body: Mapped[str]
     initial_setting: Mapped[int] = mapped_column(ForeignKey(Settings.setting_id))
     assigned_character: Mapped[int] = mapped_column(ForeignKey(Characters.character_id))
+    assigned_user: Mapped[int] = mapped_column(ForeignKey(Users.user_id))
     status: Mapped[str]
     created_at: Mapped[datetime]
 

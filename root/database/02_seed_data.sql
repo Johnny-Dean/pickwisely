@@ -39,10 +39,10 @@ INSERT INTO character_to_trait (character_id, trait_id) VALUES
 (3, 2); -- Doctor Hyde is Skeptical
 
 -- Stories
-INSERT INTO stories (story_id, title, body, initial_setting, assigned_character, status, created_at) VALUES
-(1, 'The Mansion Mystery', 'The investigation begins...', 1, 1, 'active', NOW()),
-(2, 'Ancient Secrets', 'Deep beneath the city...', 2, 2, 'pending', NOW()),
-(3, 'Space Horror', 'In the cold void of space...', 3, 3, 'completed', NOW());
+INSERT INTO stories (story_id, title, body, initial_setting, assigned_character, assigned_user, status, created_at) VALUES
+(1, 'The Mansion Mystery', 'The investigation begins...', 1, 1, 1, 'active', NOW()),
+(2, 'Ancient Secrets', 'Deep beneath the city...', 2, 2, 2, 'pending', NOW()),
+(3, 'Space Horror', 'In the cold void of space...', 3, 3, 3, 'completed', NOW());
 
 -- User States
 INSERT INTO user_states (user_id, current_story_id, last_active_at) VALUES

@@ -45,23 +45,18 @@ CREATE TABLE "story_logs" (
   "story_log_id" integer PRIMARY KEY,
   "story_level" integer,
   "character_sanity" integer,
-  "in_progress" boolean
-);
-
-CREATE TABLE "choices" (
-  "choice_id" integer PRIMARY KEY,
-  "sanity_weight" integer,
-  "long_text" varchar,
-  "short_summary" varchar
+  "in_progress" boolean,
+  "prompt_asked" varchar
 );
 
 CREATE TABLE "story_choice_options" (
   "story_log_id" integer REFERENCES "story_logs" ("story_log_id"),
-  "choice_id" integer REFERENCES "choices" ("choice_id"),
-  "prompt_asked" varchar,
+  "choice_option_id" integer PRIMARY KEY,
   "was_picked" boolean,
-  "choice_order" varchar,
-  PRIMARY KEY(story_log_id, choice_id)
+  "choice_order" integer,
+  "sanity_weight" integer,
+  "long_text" varchar,
+  "short_text" varchar
 );
 
 CREATE TABLE "traits" (

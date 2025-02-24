@@ -51,21 +51,14 @@ INSERT INTO user_states (user_id, current_story_id, last_active_at) VALUES
 (3, 3, NOW());
 
 -- Story Logs
-INSERT INTO story_logs (story_id, story_log_id, story_level, character_sanity, in_progress) VALUES
-(1, 1, 1, 100, true),
-(2, 2, 1, 95, true),
-(3, 3, 2, 85, false);
-
--- Choices
-INSERT INTO choices (choice_id, sanity_weight, long_text, short_summary) VALUES
-(1, -5, 'Investigate the strange noise coming from the basement', 'Check basement'),
-(2, -10, 'Read the mysterious ancient tome', 'Read tome'),
-(3, 0, 'Call for backup', 'Get help'),
-(4, -15, 'Enter the dark chamber alone', 'Enter chamber');
+INSERT INTO story_logs (story_id, story_log_id, story_level, character_sanity, in_progress, prompt_asked) VALUES
+(1, 1, 1, 100, true, 'You hear a strange noise. What do you do?'),
+(2, 2, 1, 95, true, 'You find an ancient book. What do you do?'),
+(3, 3, 2, 85, false, 'A dark doorway beckons. What do you do?');
 
 -- Story Choice Options
-INSERT INTO story_choice_options (story_log_id, choice_id, prompt_asked, was_picked, choice_order) VALUES
-(1, 1, 'You hear a strange noise. What do you do?', true, '1'),
-(1, 3, 'You hear a strange noise. What do you do?', false, '2'),
-(2, 2, 'You find an ancient book. What do you do?', true, '1'),
-(3, 4, 'A dark doorway beckons. What do you do?', true, '1');
+INSERT INTO story_choice_options (story_log_id, choice_option_id, was_picked, choice_order, sanity_weight, long_text, short_text) VALUES
+(1, 1, true, 1, -5, 'Investigate the strange noise coming from the basement', 'Check basement'),
+(1, 3, false, 2, -10, 'Read the mysterious ancient tome', 'Read tome'),
+(2, 2, true, 1, 0, 'Call for backup', 'Get help'),
+(3, 4, true, 1, -15, 'Enter the dark chamber alone', 'Enter chamber');

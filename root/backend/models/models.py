@@ -71,21 +71,22 @@ class StoryLogs(Base):
     story_level: Mapped[int]
     character_sanity: Mapped[int]
     in_progress: Mapped[bool]
-
-class Choices(Base):
-    __tablename__ = "choices"
-    choice_id: Mapped[int] = mapped_column(primary_key=True)
-    sanity_weight = Mapped[int]
-    long_text: Mapped[str]
-    short_summary: Mapped[str]
+    prompt_asked: Mapped[str]
+    # Relationships
+    story_choice_options: Mapped[list["StoryChoiceOptions"]] = relationship(back_populates="story_logs")
 
 class StoryChoiceOptions(Base):
     __tablename__ = "story_choice_options"
     story_log_id: Mapped[int] = mapped_column(ForeignKey(StoryLogs.story_log_id), primary_key=True)
-    choice_id: Mapped[int] = mapped_column(ForeignKey(Choices.choice_id), primary_key=True)
-    prompt_asked: Mapped[str]
+    choice_option_id: Mapped[int] = mapped_column(primary_key=True) 
     was_picked: Mapped[bool]
-    choice_order: Mapped[str]
+    choice_order: Mapped[int]
+    sanity_weight: Mapped[int]
+    long_text: Mapped[str]
+    short_text: Mapped[str]
+    # Relationships
+    story_logs: Mapped["StoryLogs"] = relationship(back_populates="story_choice_options")
+
     
 class Traits(Base):
     __tablename__ = "traits"

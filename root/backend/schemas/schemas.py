@@ -1,8 +1,9 @@
 # See: https://stackoverflow.com/questions/73700879/interaction-between-pydantic-models-schemas-in-the-fastapi-tutorial
 
 from datetime import datetime
+from typing import Annotated
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel
 
 
 class Setting(BaseModel):
@@ -23,6 +24,24 @@ class Story(BaseModel):
     created_at: datetime
     initial_setting: Setting
     character: Character
+
+class StoryChoiceOption(BaseModel):
+    was_picked: bool
+    choice_order: int
+    sanity_weight: int
+    long_text: str
+    short_text: str
+
+    class Config:
+        from_attributes = True
+
+class StoryLog(BaseModel):
+    story_log_id: int
+    story_level: int
+    character_sanity: int
+    in_progress: bool
+    prompt_asked: str
+    story_choice_options: dict[int, StoryChoiceOption]
 
 class User(BaseModel):
     user_id: int

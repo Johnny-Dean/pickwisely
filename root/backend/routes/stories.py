@@ -1,20 +1,23 @@
 
 from database import get_db
 from fastapi import APIRouter, Depends
-from models.models import Stories, Users
+from models.models import Settings, Stories
 from schemas.schemas import Story
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 
 router = APIRouter()
 
 @router.get("/stories", response_model=list[Story])
 def get_all_stories(user_id: int | None = None, db: Session = Depends(get_db)):
-    stories_query = select(Stories, Users).join(Users, Stories.user_id == Users.user_id)
-    if user_id:
-        stories_query = stories_query.filter(Stories.user_id == user_id)
+    query = db.query(Stories).options(joinedload(Stories.initial_setting))
 
-    return db.scalars(stories_query).all()
+    if user_id:
+        query = query.filter(Stories.user_id == user_id)
+    
+    stories = query.all()
+    return stories
+
 
 
 @router.get("/stories/{story_id}", response_model=Story)

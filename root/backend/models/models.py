@@ -28,27 +28,32 @@ class Users(Base):
     created_at: Mapped[datetime]
     email: Mapped[str]
 
+class Characters(Base):
+    __tablename__ = "characters"
+    character_id: Mapped[int] = mapped_column(primary_key=True)
+    character_name: Mapped[str]
+
 class Settings(Base):
     __tablename__ = "settings"
     setting_id: Mapped[int] = mapped_column(primary_key=True)
     long_text: Mapped[str]
     short_text: Mapped[str]
-
-class Characters(Base):
-    __tablename__ = "characters"
-    character_id: Mapped[int] = mapped_column(primary_key=True)
-    character_name: Mapped[str]
+    # Relationships
+    stories: Mapped[list["Stories"]] = relationship(back_populates="initial_setting")
 
 class Stories(Base):
     __tablename__ = "stories"
     story_id: Mapped[int] = mapped_column(primary_key=True)
     title: Mapped[str]
     body: Mapped[str]
-    initial_setting: Mapped[int] = mapped_column(ForeignKey(Settings.setting_id))
     character_id: Mapped[int] = mapped_column(ForeignKey(Characters.character_id))
     user_id: Mapped[int] = mapped_column(ForeignKey(Users.user_id))
     status: Mapped[str]
     created_at: Mapped[datetime]
+    initial_setting_id: Mapped[int] = mapped_column(ForeignKey(Settings.setting_id))
+
+    # Relationships
+    initial_setting: Mapped["Settings"] = relationship(back_populates="stories")
 
 class UserStates(Base):
     __tablename__ = "user_states"

@@ -24,4 +24,3 @@ class User(BaseModel):
     created_at: datetime
     email: str
     model_config = ConfigDict(from_attributes=True)
-

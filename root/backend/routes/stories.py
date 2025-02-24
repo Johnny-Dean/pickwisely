@@ -19,6 +19,5 @@ def get_all_stories(user_id: int | None = None, db: Session = Depends(get_db)):
 
 @router.get("/stories/{story_id}", response_model=Story)
 def get_story_by_story_id(story_id: int, db: Session = Depends(get_db)):
-    story_query = db.query(Stories).filter(Stories.story_id == story_id)
-
-    return story_query.first()
+    story_query = select(Stories).filter(Stories.story_id == story_id)
+    return db.scalar(story_query)

@@ -28,8 +28,8 @@ CREATE TABLE "stories" (
   "title" varchar,
   "body" text,
   "initial_setting" integer REFERENCES "settings" ("setting_id"),
-  "assigned_character" integer REFERENCES "characters" ("character_id"),
-  "assigned_user" integer REFERENCES "users" ("user_id"),
+  "character_id" integer REFERENCES "characters" ("character_id"),
+  "user_id" integer REFERENCES "users" ("user_id"),
   "status" varchar,
   "created_at" timestamp
 );

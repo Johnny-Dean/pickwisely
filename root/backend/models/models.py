@@ -7,6 +7,7 @@ from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
     mapped_column,
+    relationship,
 )
 
 
@@ -44,8 +45,8 @@ class Stories(Base):
     title: Mapped[str]
     body: Mapped[str]
     initial_setting: Mapped[int] = mapped_column(ForeignKey(Settings.setting_id))
-    assigned_character: Mapped[int] = mapped_column(ForeignKey(Characters.character_id))
-    assigned_user: Mapped[int] = mapped_column(ForeignKey(Users.user_id))
+    character_id: Mapped[int] = mapped_column(ForeignKey(Characters.character_id))
+    user_id: Mapped[int] = mapped_column(ForeignKey(Users.user_id))
     status: Mapped[str]
     created_at: Mapped[datetime]
 

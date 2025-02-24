@@ -18,12 +18,11 @@ class Story(BaseModel):
     story_id: int
     title: str
     body: str
-    character_id: int
     user_id: int
     status: str
     created_at: datetime
-    initial_setting_id: int
     initial_setting: Setting
+    character: Character
 
 class User(BaseModel):
     user_id: int

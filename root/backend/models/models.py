@@ -32,6 +32,8 @@ class Characters(Base):
     __tablename__ = "characters"
     character_id: Mapped[int] = mapped_column(primary_key=True)
     character_name: Mapped[str]
+    # Relationships
+    stories: Mapped["Stories"] = relationship(back_populates="character")
 
 class Settings(Base):
     __tablename__ = "settings"
@@ -54,6 +56,7 @@ class Stories(Base):
 
     # Relationships
     initial_setting: Mapped["Settings"] = relationship(back_populates="stories")
+    character: Mapped["Characters"] = relationship(back_populates="stories")
 
 class UserStates(Base):
     __tablename__ = "user_states"

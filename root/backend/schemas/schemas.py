@@ -5,17 +5,25 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict
 
 
+class Setting(BaseModel):
+    setting_id: int
+    long_text: str
+    short_text: str
+
+class Character(BaseModel):
+    character_id: int
+    character_name: str
+
 class Story(BaseModel):
     story_id: int
     title: str
     body: str
-    initial_setting: int
-    character_id: int 
+    character_id: int
     user_id: int
     status: str
     created_at: datetime
-
-    model_config = ConfigDict(from_attributes=True)
+    initial_setting_id: int
+    initial_setting: Setting
 
 class User(BaseModel):
     user_id: int
@@ -23,4 +31,3 @@ class User(BaseModel):
     role: str
     created_at: datetime
     email: str
-    model_config = ConfigDict(from_attributes=True)

@@ -15,7 +15,7 @@ CREATE TABLE "users" (
 CREATE TABLE "settings" (
   "setting_id" integer PRIMARY KEY,
   "long_text" varchar,
-  "short_summary" varchar
+  "short_text" varchar
 );
 
 CREATE TABLE "characters" (
@@ -27,7 +27,7 @@ CREATE TABLE "stories" (
   "story_id" integer PRIMARY KEY,
   "title" varchar,
   "body" text,
-  "initial_setting" integer REFERENCES "settings" ("setting_id"),
+  "initial_setting_id" integer REFERENCES "settings" ("setting_id"),
   "character_id" integer REFERENCES "characters" ("character_id"),
   "user_id" integer REFERENCES "users" ("user_id"),
   "status" varchar,

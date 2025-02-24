@@ -11,7 +11,7 @@ INSERT INTO users (user_id, username, role, created_at, email) VALUES
 (3, 'guest_user', 'guest', NOW(), 'guest@example.com');
 
 -- Settings
-INSERT INTO settings (setting_id, long_text, short_summary) VALUES
+INSERT INTO settings (setting_id, long_text, short_text) VALUES
 (1, 'A dark and stormy night in a Victorian mansion...', 'Victorian mansion'),
 (2, 'Deep in the catacombs beneath an ancient city...', 'Ancient catacombs'),
 (3, 'Aboard a derelict spaceship drifting through the void...', 'Abandoned spaceship');
@@ -39,7 +39,7 @@ INSERT INTO character_to_trait (character_id, trait_id) VALUES
 (3, 2); -- Doctor Hyde is Skeptical
 
 -- Stories
-INSERT INTO stories (story_id, title, body, initial_setting, character_id, user_id, status, created_at) VALUES
+INSERT INTO stories (story_id, title, body, initial_setting_id, character_id, user_id, status, created_at) VALUES
 (1, 'The Mansion Mystery', 'The investigation begins...', 1, 1, 1, 'active', NOW()),
 (2, 'Ancient Secrets', 'Deep beneath the city...', 2, 2, 2, 'pending', NOW()),
 (3, 'Space Horror', 'In the cold void of space...', 3, 3, 3, 'completed', NOW());

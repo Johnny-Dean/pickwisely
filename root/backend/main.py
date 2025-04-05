@@ -7,6 +7,7 @@ app = FastAPI()
 app.include_router(users_router)
 app.include_router(stories_router)
 
+# Allows for cross origin requests
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -14,8 +15,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
 
 @app.get("/")
 async def root():

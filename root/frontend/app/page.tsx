@@ -22,9 +22,16 @@ export default function Home() {
         </h1>
       </div>
       
-      <Link href="/users">
-        <button className="px-6 py-3 mt-4 hover:opacity-20">Begin</button>
-      </Link>
+      <Link href="/users/new">
+          <button className="font-body text-green-500 px-10 py-3 w-72 border border-green-500 hover:bg-green-500 hover:text-black transition-colors mt-4">
+            New User
+          </button>
+        </Link>
+        <Link href="/users/login">
+          <button className="font-body text-green-500 px-8 py-3 w-72 border border-green-500 hover:bg-green-500 hover:text-black transition-colors">
+            Returning User
+          </button>
+        </Link>
     </div>
   );
 }

@@ -30,19 +30,22 @@ const newUser = () => {
       password: password
     }
     axios.post(url, userObject).then(response => {console.log(response)})
+    console.log(userObject.username)
   }
 
   const userValidation = (userInfo) => {
     // check if username exists already in database 
     // check if email is valid
   }
-
   
     return (
       <div>
         <h1>Welcome to pickwisely.ai</h1>
         <h1>What is your name?</h1>
-        <form onSubmit={addUser}>
+        <form onSubmit={(e) => {
+          e.preventDefault()
+          addUser(username, email, password)
+        }}>
         <input 
           className="font-mono bg-black text-green-500 px-4 py-2 w-72"
           name="userName"
@@ -91,10 +94,6 @@ const newUser = () => {
         <button 
           className="font-mono bg-black text-green-500 px-4 py-2 w-72 block mt-4" 
           type="submit"
-          onClick={() => {
-            addUser(username, email, password)
-            // and direct to story page
-          }}
         >
           Begin
         </button>

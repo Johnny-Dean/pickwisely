@@ -15,19 +15,20 @@ const newUser = () => {
   .catch((err) => console.log(err.message))
 
   const [user, setUser] = useState([])
+  const [username, setUsername] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
 
-  const addUser = (event) => {
-    event.preventDefault()
-    // console.log('user added', event.target)
-
+  
+  const addUser = (username: string, email: string, password: string) => {
     const userObject = {
       user_id: 1, 
-      username: event.target.value, 
+      username: username, 
       role: 'user', 
       created_at: Date.now(),
-      email: ""
+      email: email,
+      password: password
     }
-    console.log(userObject.username)
     axios.post(url, userObject).then(response => {console.log(response)})
   }
 
@@ -39,11 +40,64 @@ const newUser = () => {
   
     return (
       <div>
+        <h1>Welcome to pickwisely.ai</h1>
+        <h1>What is your name?</h1>
         <form onSubmit={addUser}>
         <input 
-        className="flex w-72 outline-solid "
-        name="userName"/>
-        <button className="outline-solid" type="submit">Begin</button>
+          className="font-mono bg-black text-green-500 px-4 py-2 w-72"
+          name="userName"
+          placeholder="$ enter username _"
+          style={{
+            caretColor: 'green',
+            outline: 'none',
+            border: 'none'
+          }}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+              setUsername(e.currentTarget.value)
+            }
+          }}
+        />
+        <h1>Nice to meet you, {username}. Please enter your email.</h1>
+        <input
+          className="font-mono bg-black text-green-500 px-4 py-2 w-72"
+          name="email"
+          placeholder="$ enter email _"
+          style={{
+            caretColor: 'green',
+            outline: 'none',
+            border: 'none'
+          }}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+              setEmail(e.currentTarget.value)
+            }
+          }}
+        />
+        <h1>Please create a password.</h1>
+        <input
+          className="font-mono bg-black text-green-500 px-4 py-2 w-72"
+          name="password"
+          type="password"
+          placeholder="$ enter password _"
+          style={{
+            caretColor: 'green',
+            outline: 'none',
+            border: 'none'
+          }}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button 
+          className="font-mono bg-black text-green-500 px-4 py-2 w-72 block mt-4" 
+          type="submit"
+          onClick={() => {
+            addUser(username, email, password)
+            // and direct to story page
+          }}
+        >
+          Begin
+        </button>
       </form>
       </div>
     )

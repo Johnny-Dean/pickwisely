@@ -4,6 +4,7 @@ CREATE TABLE "privileges" (
   "resource" varchar
 );
 
+-- TODO: store passwords --> need to hash passwords
 CREATE TABLE "users" (
   "user_id" integer PRIMARY KEY,
   "username" varchar,

@@ -1,23 +1,21 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { useRouter } from "next/navigation"
 
 export default function Login() {
     const [step, setStep] = useState(1)
-    const [username, setUsername] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [confirmPassword, setConfirmPassword] = useState("")
     const [showContinue, setShowContinue] = useState(false)
     const router = useRouter()
 
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             e.preventDefault()
-            if (step < 4) {
+            if (step < 2) {
                 setStep(step + 1)
-            } else if (password === confirmPassword) {
+            } else {
                 setShowContinue(true)
             }
         } else if (e.key === 'Backspace' && !e.currentTarget.value) {
@@ -28,18 +26,18 @@ export default function Login() {
         }
     }
 
-    const handleFinalKeyPress = (e: KeyboardEvent) => {
+    const handleFinalKeyPress = useCallback(() => {
         if (showContinue) {
             router.push('/story')
         }
-    }
+    }, [showContinue, router])
 
     useEffect(() => {
         if (showContinue) {
             window.addEventListener('keydown', handleFinalKeyPress)
             return () => window.removeEventListener('keydown', handleFinalKeyPress)
         }
-    }, [showContinue])
+    }, [showContinue, handleFinalKeyPress])
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-[#0a0a0a] p-4">
@@ -48,11 +46,11 @@ export default function Login() {
                     <div className="flex items-center space-x-2">
                         <span>▸</span>
                         <input
-                            type="text"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             onKeyDown={handleKeyPress}
-                            placeholder="Enter username"
+                            placeholder="Enter email"
                             className="bg-transparent border-none outline-none font-body text-green-500 w-full"
                             autoFocus={step === 1}
                         />
@@ -63,43 +61,13 @@ export default function Login() {
                     <div className="flex items-center space-x-2">
                         <span>▸</span>
                         <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            onKeyDown={handleKeyPress}
-                            placeholder="Enter email"
-                            className="bg-transparent border-none outline-none font-body text-green-500 w-full"
-                            autoFocus={step === 2}
-                        />
-                    </div>
-                )}
-
-                {step >= 3 && (
-                    <div className="flex items-center space-x-2">
-                        <span>▸</span>
-                        <input
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             onKeyDown={handleKeyPress}
                             placeholder="Enter password"
                             className="bg-transparent border-none outline-none font-body text-green-500 w-full"
-                            autoFocus={step === 3}
-                        />
-                    </div>
-                )}
-
-                {step >= 4 && (
-                    <div className="flex items-center space-x-2">
-                        <span>▸</span>
-                        <input
-                            type="password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            onKeyDown={handleKeyPress}
-                            placeholder="Confirm password"
-                            className="bg-transparent border-none outline-none font-body text-green-500 w-full"
-                            autoFocus={step === 4}
+                            autoFocus={step === 2}
                         />
                     </div>
                 )}

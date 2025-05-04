@@ -14,9 +14,8 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen text-center">
-      {/* typing effect container */}
       <div className="typing-container">
-        {/* TODO: Fix animation */}
+        {/* TODO: Fix animation in tailwind */}
         <h1 className="text-5xl font-body overflow-hidden whitespace-nowrap">
           pickwisely.ai
           </h1>

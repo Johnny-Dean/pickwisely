@@ -102,12 +102,14 @@ const StoryPage = () => {
                     </p>
                 )}
                 
-                <div className="space-y-4">
+                <div className="flex flex-row justify-center items-center gap-8">
                     {storyOptions?.map((option) => (
                         <button
                             key={option.choice_option_id}
                             onClick={() => handleChoice(option.choice_option_id)}
-                            className="font-body text-green-500 px-10 py-3 w-72 border border-green-500 hover:bg-green-500 hover:text-black transition-colors"
+                            className="font-body text-black bg-white px-6 py-8 w-72 border-2 border-gray-200 
+                            shadow-lg rounded-lg hover:bg-gray-50 transition-all transform hover:scale-105
+                            flex items-center justify-center text-center min-h-[200px]"
                         >
                             {option.long_text}
                         </button>
@@ -116,6 +118,5 @@ const StoryPage = () => {
             </div>
         </div>
     );
-};
-
+}
 export default StoryPage

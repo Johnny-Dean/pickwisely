@@ -1,23 +1,87 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
+import { useRouter } from "next/navigation"
 
 export default function Login() {
-    const [username, setUsername] = useState("")
+    const [step, setStep] = useState(1)
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [showContinue, setShowContinue] = useState(false)
+    const router = useRouter()
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        console.log(username, password)
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            if (step < 2) {
+                setStep(step + 1)
+            } else {
+                setShowContinue(true)
+            }
+        } else if (e.key === 'Backspace' && !e.currentTarget.value) {
+            e.preventDefault()
+            if (step > 1) {
+                setStep(step - 1)
+            }
+        }
     }
-    
+
+    const handleFinalKeyPress = useCallback(() => {
+        if (showContinue) {
+            router.push('/story')
+        }
+    }, [showContinue, router])
+
+    useEffect(() => {
+        if (showContinue) {
+            window.addEventListener('keydown', handleFinalKeyPress)
+            return () => window.removeEventListener('keydown', handleFinalKeyPress)
+        }
+    }, [showContinue, handleFinalKeyPress])
+
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <button type="submit">Login</button>
-            </form>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#0a0a0a] p-4">
+            <div className="w-full max-w-md space-y-4 font-body text-green-500">
+                {step >= 1 && (
+                    <div className="flex items-center space-x-2">
+                        <span>▸</span>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            placeholder="Enter email"
+                            className="bg-transparent border-none outline-none font-body text-green-500 w-full"
+                            autoFocus={step === 1}
+                        />
+                    </div>
+                )}
+
+                {step >= 2 && (
+                    <div className="flex items-center space-x-2">
+                        <span>▸</span>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            placeholder="Enter password"
+                            className="bg-transparent border-none outline-none font-body text-green-500 w-full"
+                            autoFocus={step === 2}
+                        />
+                    </div>
+                )}
+
+                {showContinue && (
+                    <div className="text-center mt-8">
+                        <p>&#60;PRESS ANY KEY TO CONTINUE&#62;</p>
+                    </div>
+                )}
+
+                <div className="text-center mt-4 text-sm text-gray-500">
+                    Press backspace to go to previous step
+                </div>
+            </div>
         </div>
     )
 }

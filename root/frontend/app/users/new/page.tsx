@@ -1,105 +1,119 @@
-"use client";
+"use client"
 
-import React from 'react'
-import { useState } from "react";
-import axios from "axios";
-import { Input } from "@material-tailwind/react";
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 
-const newUser = () => {
+export default function Login() {
+    const [step, setStep] = useState(1)
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
+    const [showContinue, setShowContinue] = useState(false)
+    const router = useRouter()
 
-  const url = "http://localhost:8000/users/"
-  const promise = axios.get(url)
-
-  promise
-  .then((res) => console.log(res.data))
-  .catch((err) => console.log(err.message))
-
-  const [user, setUser] = useState([])
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-
-  
-  const addUser = (username: string, email: string, password: string) => {
-    const userObject = {
-      user_id: 1, 
-      username: username, 
-      role: 'user', 
-      created_at: Date.now(),
-      email: email,
-      password: password
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            if (step < 4) {
+                setStep(step + 1)
+            } else if (password === confirmPassword) {
+                setShowContinue(true)
+            }
+        } else if (e.key === 'Backspace' && !e.currentTarget.value) {
+            e.preventDefault()
+            if (step > 1) {
+                setStep(step - 1)
+            }
+        }
     }
-    axios.post(url, userObject).then(response => {console.log(response)})
-    console.log(userObject.username)
-  }
 
-  const userValidation = (userInfo) => {
-    // check if username exists already in database 
-    // check if email is valid
-  }
-  
+    const handleFinalKeyPress = (e: KeyboardEvent) => {
+        if (showContinue) {
+            router.push('/story')
+        }
+    }
+
+    useEffect(() => {
+        if (showContinue) {
+            window.addEventListener('keydown', handleFinalKeyPress)
+            return () => window.removeEventListener('keydown', handleFinalKeyPress)
+        }
+    }, [showContinue])
+
     return (
-      <div>
-        <h1>Welcome to pickwisely.ai</h1>
-        <h1>What is your name?</h1>
-        <form onSubmit={(e) => {
-          e.preventDefault()
-          addUser(username, email, password)
-        }}>
-        <input 
-          className="font-mono bg-black text-green-500 px-4 py-2 w-72"
-          name="userName"
-          placeholder="$ enter username _"
-          style={{
-            caretColor: 'green',
-            outline: 'none',
-            border: 'none'
-          }}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === 'Enter') {
-              setUsername(e.currentTarget.value)
-            }
-          }}
-        />
-        <h1>Nice to meet you, {username}. Please enter your email.</h1>
-        <input
-          className="font-mono bg-black text-green-500 px-4 py-2 w-72"
-          name="email"
-          placeholder="$ enter email _"
-          style={{
-            caretColor: 'green',
-            outline: 'none',
-            border: 'none'
-          }}
-          onChange={(e) => setEmail(e.target.value)}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === 'Enter') {
-              setEmail(e.currentTarget.value)
-            }
-          }}
-        />
-        <h1>Please create a password.</h1>
-        <input
-          className="font-mono bg-black text-green-500 px-4 py-2 w-72"
-          name="password"
-          type="password"
-          placeholder="$ enter password _"
-          style={{
-            caretColor: 'green',
-            outline: 'none',
-            border: 'none'
-          }}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button 
-          className="font-mono bg-black text-green-500 px-4 py-2 w-72 block mt-4" 
-          type="submit"
-        >
-          Begin
-        </button>
-      </form>
-      </div>
+        <div className="flex flex-col items-center justify-center min-h-screen bg-[#0a0a0a] p-4">
+            <div className="w-full max-w-md space-y-4 font-body text-green-500">
+                {step >= 1 && (
+                    <div className="flex items-center space-x-2">
+                        <span>▸</span>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            placeholder="Enter username"
+                            className="bg-transparent border-none outline-none font-body text-green-500 w-full"
+                            autoFocus={step === 1}
+                        />
+                    </div>
+                )}
+
+                {step >= 2 && (
+                    <div className="flex items-center space-x-2">
+                        <span>▸</span>
+                        <input
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            placeholder="Enter email"
+                            className="bg-transparent border-none outline-none font-body text-green-500 w-full"
+                            autoFocus={step === 2}
+                        />
+                    </div>
+                )}
+
+                {step >= 3 && (
+                    <div className="flex items-center space-x-2">
+                        <span>▸</span>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            placeholder="Enter password"
+                            className="bg-transparent border-none outline-none font-body text-green-500 w-full"
+                            autoFocus={step === 3}
+                        />
+                    </div>
+                )}
+
+                {step >= 4 && (
+                    <div className="flex items-center space-x-2">
+                        <span>▸</span>
+                        <input
+                            type="password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            onKeyDown={handleKeyPress}
+                            placeholder="Confirm password"
+                            className="bg-transparent border-none outline-none font-body text-green-500 w-full"
+                            autoFocus={step === 4}
+                        />
+                    </div>
+                )}
+
+                {showContinue && (
+                    <div className="text-center mt-8">
+                        <p>&#60;PRESS ANY KEY TO CONTINUE&#62;</p>
+                    </div>
+                )}
+
+                <div className="text-center mt-4 text-sm text-gray-500">
+                    Press backspace to go to previous step
+                </div>
+            </div>
+        </div>
     )
 }
-
-export default newUser;

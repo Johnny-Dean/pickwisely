@@ -64,7 +64,7 @@ const StoryPage = () => {
         return (
             <div>
                 <p className='font-body text-green-500 flex items-center justify-center min-h-screen'>{story[0].initial_setting.long_text}</p>
-                <p>{storyOptions[0].initial_setting.long_text}</p>
+                <p>{storyOptions[0].long_text}</p>
                 {/* <button onClick = nextPrompt></button> */}
             </div>
         )

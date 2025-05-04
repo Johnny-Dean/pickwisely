@@ -17,9 +17,9 @@ export default function Home() {
       {/* typing effect container */}
       <div className="typing-container">
         {/* TODO: Fix animation */}
-        <h1 className="text-5xl font-body overflow-hidden whitespace-nowrap border-r-4 border-white">
+        <h1 className="text-5xl font-body overflow-hidden whitespace-nowrap">
           pickwisely.ai
-        </h1>
+          </h1>
       </div>
       
       <Link href="/users/new">

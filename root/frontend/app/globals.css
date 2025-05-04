@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import "tailwindcss";
+
 
 @tailwind base;
 @tailwind components;
@@ -35,8 +37,9 @@ body {
   display: inline-block;
   overflow: hidden;
   white-space: nowrap;
-  border-right: 3px solid transparent;
+  border-right: 2px solid transparent;
   animation: typing 3s steps(20, end) forwards, blink 0.7s infinite;
+  width: fit-content; 
 }
 
 @keyframes typing {
@@ -44,15 +47,15 @@ body {
     width: 0;
   }
   to {
-    width: 42%;
+    width: 32%; 
   }
 }
 
 @keyframes blink {
-  50% {
+  from, to {
     border-color: transparent;
   }
-  100% {
-    border-color: white;
+  50% {
+    border-color: #00FF41;
   }
 }
